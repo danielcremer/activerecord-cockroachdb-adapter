@@ -1,7 +1,7 @@
 require 'active_record/connection_adapters/postgresql_adapter'
 
 module ActiveRecord
-  module ConnectionHandling
+  class Base
     def cockroachdb_connection(config)
       # This is copied from the PostgreSQL adapter.
       conn_params = config.symbolize_keys
