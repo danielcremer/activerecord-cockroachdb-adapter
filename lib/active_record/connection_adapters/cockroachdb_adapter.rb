@@ -31,7 +31,13 @@ class ActiveRecord::ConnectionAdapters::CockroachDBAdapter < ActiveRecord::Conne
   # `extract_schema_qualified_name` method was aliased in the PostgreSQLAdapter.
   # To ensure backward compatibility with both <5.1 and 5.1, we rename it here
   # to use the same original `Utils` module.
-  Utils = ActiveRecord::ConnectionAdapters::PostgreSQL::Utils
+  Utils = ActiveRecord::ConnectionAdapters::PostgreSQLAdapter::Utils
+
+  # Fix connection format to use hash for later pg gem version
+  def connect
+    @connection = PGconn.connect(@connection_parameters)
+    configure_connection
+  end
 
   def supports_json?
       false
